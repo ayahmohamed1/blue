@@ -1,0 +1,401 @@
+/* =============================================
+   GLOBAL STYLES — Birthday Gift Website
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-display: 'Caveat', cursive;
+  --font-body: 'Nunito', sans-serif;
+  --accent: #e8a87c;
+  --accent-light: #fdf3ec;
+  --accent-dark: #c97b4b;
+  --blue-card: #1a3aae;
+  --white: #ffffff;
+  --text-dark: #1a1a2e;
+  --text-mid: #4a4a6a;
+  --radius: 20px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+/* =============================================
+   LOADING SCREEN
+   ============================================= */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #fdf3ec;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-heart {
+  font-size: 3rem;
+  animation: heartbeat 0.8s ease-in-out infinite;
+}
+
+.loading-text {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--accent-dark);
+  margin-top: 16px;
+  letter-spacing: 0.05em;
+}
+
+.loading-dots::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+  100% { content: ''; }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* =============================================
+   PAGE WRAPPER
+   ============================================= */
+.gift-page {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* =============================================
+   SCREEN SYSTEM
+   ============================================= */
+.screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.7s ease;
+}
+
+.screen.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  visibility: visible;
+}
+
+.screen.hidden {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.screen.exit {
+  opacity: 0;
+  transform: scale(1.05) translateY(-30px);
+}
+
+/* =============================================
+   INTRO SCREEN
+   ============================================= */
+.intro-screen {
+  background: radial-gradient(ellipse at center, #fff8f3 0%, #fdecd8 50%, #f9d9b8 100%);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Floating particles */
+.intro-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(232,168,124,0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.intro-text-top {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  color: var(--text-dark);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  animation: fadeInDown 0.8s ease 0.2s both;
+}
+
+.intro-text-bottom {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--accent-dark);
+  font-weight: 600;
+  text-align: center;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.envelope-wrapper {
+  position: relative;
+  animation: floatEnvelope 3s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(201,123,75,0.25));
+  transition: transform 0.2s ease;
+}
+
+.envelope-wrapper:hover {
+  transform: scale(1.04);
+}
+
+.envelope-image {
+  width: clamp(220px, 40vw, 340px);
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.click-hint {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--accent-dark);
+  opacity: 0.7;
+  margin-top: 8px;
+  animation: pulse 2s ease-in-out infinite;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes floatEnvelope {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Hearts floating */
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.heart-particle {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: floatHeart linear infinite;
+}
+
+@keyframes floatHeart {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-100vh) scale(1); }
+}
+
+/* =============================================
+   BIRTHDAY SCREEN
+   ============================================= */
+.birthday-screen {
+  background: radial-gradient(ellipse at 30% 20%, #1a3aae 0%, #0d1f6e 40%, #060d3a 100%);
+  overflow-y: auto;
+  position: fixed;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px 60px;
+}
+
+.birthday-inner {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  animation: birthdayReveal 1s ease 0.1s both;
+}
+
+@keyframes birthdayReveal {
+  from { opacity: 0; transform: scale(0.92) translateY(30px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.birthday-image-wrapper {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.birthday-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Star sparkles */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  animation: sparkleAnim ease-in-out infinite;
+}
+
+.sparkle::before {
+  content: '✨';
+  font-size: 1.2rem;
+}
+
+@keyframes sparkleAnim {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+/* =============================================
+   MUSIC BUTTON
+   ============================================= */
+.music-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.music-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.1);
+}
+
+.music-btn.playing {
+  animation: musicPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(232,168,124,0.3); }
+  50% { box-shadow: 0 4px 30px rgba(232,168,124,0.7); }
+}
+
+/* =============================================
+   CONFETTI CANVAS
+   ============================================= */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* =============================================
+   NOT FOUND STATE
+   ============================================= */
+.not-found {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fdf3ec;
+  gap: 16px;
+  text-align: center;
+  padding: 20px;
+}
+
+.not-found h1 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--accent-dark);
+}
+
+.not-found p {
+  font-family: var(--font-body);
+  color: var(--text-mid);
+  font-size: 1.1rem;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 480px) {
+  .intro-text-top { font-size: 2.4rem; }
+  .intro-text-bottom { font-size: 1.5rem; }
+  .envelope-image { width: 260px; }
+  .music-btn { bottom: 16px; right: 16px; }
+}
