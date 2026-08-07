@@ -29,12 +29,12 @@ const giftData: Record<string, GiftData> = {
   // Link: yourdomain.com/gift/aya
   // ----------------------------------------------------------
   aya: {
-    name: "Aya",                                          // EDIT: recipient name
+    name: "youssef",                                          // EDIT: recipient name
     envelopeImage: "/images/envelope-aya.png",           // EDIT: intro image path
     birthdayImage: "/images/birthday-aya.png",           // EDIT: birthday card image path
-    accentColor: "#e8a87c",                              // EDIT: accent color
+    accentColor: "#7f339d",                              // EDIT: accent color
     musicUrl: "",                                        // EDIT: add an mp3 URL for background music (or leave empty)
-    message: `Today is all about celebrating you — your kindness, your strength, your growth, and all the little things that make you who you are.
+    message: `yesterday is all about celebrating you — your kindness, your strength, your growth, and all the little things that make you who you are.
 
 I hope you take a moment to look back on everything you've been through and realize just how far you've come. Life hasn't always been easy, but you've handled it in your own way, and that's something worth being proud of.
 

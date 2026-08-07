@@ -8,11 +8,17 @@ interface Props {
   data: GiftData
 }
 
+type ScreenType = 'intro' | 'date' | 'success' | 'birthday'
+
 export default function GiftClient({ data }: Props) {
   const [loading, setLoading] = useState(true)
-  const [screen, setScreen] = useState<'intro' | 'birthday'>('intro')
+  const [screen, setScreen] = useState<ScreenType>('intro')
   const [introExiting, setIntroExiting] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
+  
+  // حالة تتبع عدد ضغطات زر "No"
+  const [noCount, setNoCount] = useState(0)
+
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const confettiRef = useRef<HTMLCanvasElement | null>(null)
   const confettiAnimRef = useRef<number | null>(null)
@@ -42,6 +48,29 @@ export default function GiftClient({ data }: Props) {
       audioRef.current?.pause()
     }
   }, [data.musicUrl])
+
+  // 1. إضافة دالة للتنقل وحفظ السجل في المتصفح
+  const navigateTo = useCallback((newScreen: ScreenType) => {
+    window.history.pushState({ screen: newScreen }, '')
+    setScreen(newScreen)
+  }, [])
+
+  // 2. الاستماع لزر الرجوع (Back Button)
+  useEffect(() => {
+    // تعيين الشاشة الأولى في سجل المتصفح
+    window.history.replaceState({ screen: 'intro' }, '')
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.screen) {
+        setScreen(event.state.screen)
+      } else {
+        setScreen('intro')
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   // Confetti launcher
   const launchConfetti = useCallback(() => {
@@ -110,18 +139,40 @@ export default function GiftClient({ data }: Props) {
     confettiAnimRef.current = requestAnimationFrame(animate)
   }, [])
 
-  // Handle transition to birthday screen
+  // Transition from Intro -> Date Screen
   const handleEnvelopeClick = useCallback(() => {
     if (screen !== 'intro') return
     setIntroExiting(true)
     setTimeout(() => {
-      setScreen('birthday')
+      navigateTo('date') // استخدمنا الدالة الجديدة هنا
       setIntroExiting(false)
-      // Launch confetti after screen transition
-      setTimeout(launchConfetti, 400)
-      setTimeout(launchConfetti, 1200)
     }, 600)
-  }, [screen, launchConfetti])
+  }, [screen, navigateTo])
+
+  // Handle Yes click
+  const handleYesClick = () => {
+    navigateTo('success') // استخدمنا الدالة الجديدة هنا
+    setTimeout(launchConfetti, 200)
+    setTimeout(launchConfetti, 1000)
+  }
+
+  // Handle proceeding to final Birthday screen
+  const handleProceedToBirthday = () => {
+    navigateTo('birthday') // استخدمنا الدالة الجديدة هنا
+    setTimeout(launchConfetti, 400)
+  }
+
+  // Get dynamic "No" button text based on clicks
+  const getNoButtonText = () => {
+    const phrases = [
+      'No',
+      'Please? 🥺',
+      'Really?!',
+      'Are you sure?',
+      'Knew you would say yes!'
+    ]
+    return phrases[Math.min(noCount, phrases.length - 1)]
+  }
 
   // Music toggle
   const toggleMusic = useCallback(() => {
@@ -145,7 +196,6 @@ export default function GiftClient({ data }: Props) {
         </div>
       </div>
 
-      {/* Confetti Canvas */}
       <canvas ref={confettiRef} id="confetti-canvas" />
 
       {/* ── SCREEN 1: INTRO ── */}
@@ -156,63 +206,75 @@ export default function GiftClient({ data }: Props) {
             : 'hidden'
         }`}
         onClick={handleEnvelopeClick}
-        aria-label="Click to open your birthday gift"
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && handleEnvelopeClick()}
       >
-        {/* Floating hearts */}
         <FloatingHearts />
-
         <div className="intro-content">
           <p className="intro-text-top">hello {data.name.toLowerCase()}!</p>
-
           <div className="envelope-wrapper">
-            <Image
-              src={data.envelopeImage}
-              alt="Birthday envelope"
-              width={340}
-              height={260}
-              className="envelope-image"
-              priority
-            />
+            <Image src={data.envelopeImage} alt="Envelope" width={340} height={260} className="envelope-image" priority />
           </div>
-
           <p className="intro-text-bottom">got a mail for you &lt;3</p>
           <p className="click-hint">tap to open ✨</p>
         </div>
       </div>
 
-      {/* ── SCREEN 2: BIRTHDAY ── */}
-      <div
-        className={`screen birthday-screen ${
-          screen === 'birthday' ? 'visible' : 'hidden'
-        }`}
-      >
-        {/* Sparkles */}
-        <Sparkles />
+      {/* ── SCREEN 2: DATE PROMPT ── */}
+      <div className={`screen date-screen ${screen === 'date' ? 'visible' : 'hidden'}`}>
+        <div className="date-content">
+          <p className="date-subtitle">✦ IMPORTANT QUESTION ✦</p>
+          <h1 className="date-title">Will you stay with me forever?</h1>
+          
+          <div className="date-image-card">
+            <Image src="/images/bear-ask.jpg" alt="Will you be my date?" width={250} height={250} unoptimized />
+          </div>
 
+          <div className="date-actions">
+            <button 
+              className="btn-yes" 
+              style={{ fontSize: `${1 + noCount * 0.3}rem`, padding: `${0.8 + noCount * 0.2}rem ${2 + noCount * 0.2}rem` }}
+              onClick={handleYesClick}
+            >
+              Yes!
+            </button>
+            <button 
+              className="btn-no" 
+              onClick={() => setNoCount(noCount + 1)}
+            >
+              {getNoButtonText()}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── SCREEN 3: SUCCESS ── */}
+      <div className={`screen date-success-screen ${screen === 'success' ? 'visible' : 'hidden'}`}>
+        <div className="date-content">
+          <p className="date-subtitle">✦ IT IS A YES! ✦</p>
+          <h1 className="date-title">Knew you would say yes! 💙</h1>
+          
+          <div className="date-image-card">
+            <Image src="/images/bear-hug.gif" alt="Yay!" width={250} height={250} unoptimized />
+          </div>
+
+          <button className="btn-proceed" onClick={handleProceedToBirthday}>
+            See your gift ✨
+          </button>
+        </div>
+      </div>
+
+      {/* ── SCREEN 4: BIRTHDAY ── */}
+      <div className={`screen birthday-screen ${screen === 'birthday' ? 'visible' : 'hidden'}`}>
+        <Sparkles />
         <div className="birthday-inner">
           <div className="birthday-image-wrapper">
-            <Image
-              src={data.birthdayImage}
-              alt={`Happy Birthday ${data.name}`}
-              width={700}
-              height={1000}
-              className="birthday-image"
-              priority
-            />
+            <Image src={data.birthdayImage} alt={`Happy Birthday`} width={700} height={1000} className="birthday-image" priority />
           </div>
         </div>
 
-        {/* Music button — only show if music URL is set */}
         {data.musicUrl && (
-          <button
-            className={`music-btn ${musicPlaying ? 'playing' : ''}`}
-            onClick={toggleMusic}
-            aria-label={musicPlaying ? 'Pause music' : 'Play music'}
-            title={musicPlaying ? 'Pause music' : 'Play music'}
-          >
+          <button className={`music-btn ${musicPlaying ? 'playing' : ''}`} onClick={toggleMusic}>
             {musicPlaying ? '🎵' : '🔇'}
           </button>
         )}
@@ -222,7 +284,7 @@ export default function GiftClient({ data }: Props) {
 }
 
 // =============================================
-// FLOATING HEARTS COMPONENT
+// COMPONENTS
 // =============================================
 function FloatingHearts() {
   const hearts = ['❤️', '🧡', '💛', '💗', '💝', '💖', '✨', '🌸']
@@ -247,9 +309,6 @@ function FloatingHearts() {
   )
 }
 
-// =============================================
-// SPARKLES COMPONENT
-// =============================================
 function Sparkles() {
   return (
     <div aria-hidden="true" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
@@ -269,18 +328,6 @@ function Sparkles() {
   )
 }
 
-// =============================================
-// TYPES
-// =============================================
 interface ConfettiPiece {
-  x: number
-  y: number
-  vx: number
-  vy: number
-  color: string
-  size: number
-  rotation: number
-  rotationSpeed: number
-  shape: 'rect' | 'circle'
-  opacity: number
+  x: number; y: number; vx: number; vy: number; color: string; size: number; rotation: number; rotationSpeed: number; shape: 'rect' | 'circle'; opacity: number;
 }
