@@ -1,5 +1,5 @@
 /* =============================================
-   GLOBAL STYLES — Dark Theme (Responsive & No-Scroll)
+   GLOBAL STYLES — Dark Theme (Fully Responsive)
    ============================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -7,7 +7,7 @@ body {
   font-family: 'Nunito', sans-serif;
   background-color: #050b14; 
   color: #e2e8f0;
-  overflow: hidden; /* يمنع السكرول الخارجي للصفحة بالكامل */
+  overflow: hidden; /* بنقفل سكرول الصفحة الأساسي */
 }
 
 /* =============================================
@@ -15,7 +15,7 @@ body {
    ============================================= */
 .gift-page {
   width: 100vw;
-  height: 100dvh; /* 100dvh بتظبط الشاشة بالظبط على الموبايل */
+  height: 100vh;
   position: relative;
   background-image: radial-gradient(circle at 50% 50%, rgba(20, 35, 75, 0.4) 0%, transparent 60%);
 }
@@ -29,7 +29,7 @@ body {
 }
 
 /* =============================================
-   DECORATIONS (Corners & Side Text)
+   DECORATIONS
    ============================================= */
 .corners-overlay { position: absolute; inset: 15px; pointer-events: none; z-index: 50; }
 .corner { position: absolute; width: 25px; height: 25px; border: 1px solid #1e3a8a; }
@@ -47,50 +47,58 @@ body {
 .side-text.right { right: -60px; transform: translateY(-50%) rotate(90deg); }
 
 /* =============================================
-   SCREEN SYSTEM (Perfectly Centered, Scroll only if needed)
+   SCREEN SYSTEM (Robust Centering & Scrolling)
    ============================================= */
 .screen {
-  position: absolute; inset: 0; 
-  width: 100%; height: 100%;
-  overflow-y: auto; overflow-x: hidden;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%;
+  overflow-y: auto; 
+  overflow-x: hidden;
+  opacity: 0; 
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
+  display: flex; /* لضمان التمركز */
 }
 
 .screen.visible { opacity: 1; visibility: visible; z-index: 20; }
 
 .content-wrapper {
-  min-height: 100%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 2rem 1rem; max-width: 900px; margin: 0 auto; text-align: center;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%; 
+  max-width: 900px; 
+  margin: auto; /* السر هنا: بيسنتر المحتوى في نص الشاشة بالضبط ولو طول بيسمح بالسكرول */
+  padding: 40px 20px; 
+  text-align: center;
 }
 
 /* =============================================
    TYPOGRAPHY & ELEMENTS
    ============================================= */
 .subtitle {
-  color: #38bdf8; font-size: 0.7rem; text-transform: uppercase;
+  color: #38bdf8; font-size: 0.75rem; text-transform: uppercase;
   letter-spacing: 0.15em; margin-bottom: 0.8rem; font-weight: bold;
 }
 .gift-title {
-  font-family: 'Georgia', serif; font-size: clamp(2rem, 5vw, 3.2rem);
+  font-family: 'Georgia', serif; font-size: clamp(2.2rem, 6vw, 3.5rem);
   color: white; line-height: 1.2; margin-bottom: 1rem;
 }
 .gift-title span { color: #38bdf8; font-style: italic; }
 .crown-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
 .dots { color: #1e3a8a; font-size: 1.2rem; letter-spacing: 0.5em; margin-bottom: 1rem; }
 .description {
-  color: #64748b; font-style: italic; max-width: 400px;
-  line-height: 1.5; margin-bottom: 1.5rem; font-size: 0.9rem;
+  color: #64748b; font-style: italic; max-width: 450px;
+  line-height: 1.5; margin-bottom: 1.5rem; font-size: 0.95rem;
 }
 
 /* Buttons */
 .btn-primary, .btn-secondary {
-  border: none; padding: 0.8rem 2rem; border-radius: 50px; 
-  font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
+  border: none; padding: 0.8rem 2.5rem; border-radius: 50px; 
+  font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(56, 189, 248, 0.25);
 }
 .btn-primary { background: linear-gradient(135deg, #38bdf8, #2563eb); color: white; }
@@ -100,13 +108,13 @@ body {
 .btn-secondary:hover { transform: scale(1.05); }
 
 /* =============================================
-   RESPONSIVE SVG CONTAINERS
+   SVG CONTAINERS
    ============================================= */
 .svg-container {
-  width: 100%; max-width: 220px; aspect-ratio: 1/1; 
+  width: 100%; max-width: 200px; aspect-ratio: 1/1; 
   margin: 0 auto 1.5rem; position: relative;
 }
-.svg-container.envelope { max-width: 280px; aspect-ratio: 3/2; cursor: pointer; }
+.svg-container.envelope { max-width: 250px; aspect-ratio: 3/2; cursor: pointer; }
 
 .cake-glow {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -115,7 +123,7 @@ body {
   z-index: -1; pointer-events: none;
 }
 
-.secret-link { color: #64748b; font-size: 0.85rem; cursor: pointer; transition: color 0.3s; background: none; border: none; margin-top: 10px; }
+.secret-link { color: #64748b; font-size: 0.9rem; cursor: pointer; transition: color 0.3s; background: none; border: none; margin-top: 10px; }
 .secret-link:hover { color: white; }
 
 /* =============================================
@@ -123,13 +131,13 @@ body {
    ============================================= */
 .letter-card {
   background: #12161f; border: 1px solid #1e293b; border-top: 2px solid #38bdf8;
-  border-radius: 12px; padding: 1.5rem 2rem; max-width: 600px; width: 95%;
+  border-radius: 12px; padding: 1.5rem 2rem; max-width: 600px; width: 100%;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-  display: flex; flex-direction: column; max-height: 85vh; 
+  display: flex; flex-direction: column; max-height: 80vh; 
 }
 
 .top-accent-sq { width: 12px; height: 12px; background: #cbd5e1; margin: 0 auto 1.5rem; }
-.letter-title { color: #38bdf8; font-family: 'Georgia', serif; font-style: italic; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
+.letter-title { color: #38bdf8; font-family: 'Georgia', serif; font-style: italic; font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
 
 .letter-scroll-area {
   overflow-y: auto; padding-right: 10px; margin-bottom: 1.5rem;
@@ -138,26 +146,38 @@ body {
 .letter-scroll-area::-webkit-scrollbar { width: 4px; }
 .letter-scroll-area::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
 
-.letter-body { color: #e2e8f0; line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; }
+.letter-body { color: #e2e8f0; line-height: 1.8; font-size: 1rem; white-space: pre-wrap; }
 .letter-divider { border-top: 1px solid #1e293b; margin: 1.5rem 0; position: relative; display: flex; justify-content: center; }
 .letter-divider span { background: #12161f; color: #1e3a8a; position: absolute; top: -10px; padding: 0 10px; font-size: 0.8rem; }
 
 .signature { text-align: center; }
-.signature p:first-child { color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
-.signature p:last-child { color: #38bdf8; font-family: 'Georgia', serif; font-style: italic; font-size: 1.8rem; margin-top: 0.2rem; }
+.signature p:first-child { color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; }
+.signature p:last-child { color: #38bdf8; font-family: 'Georgia', serif; font-style: italic; font-size: 2rem; margin-top: 0.2rem; }
 
 /* =============================================
-   MOMENTS GRID
+   MOMENTS GRID (Fixed for Mobile)
    ============================================= */
 .moments-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
-  width: 100%; max-width: 400px; margin: 1.5rem auto;
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 15px;
+  width: 100%; 
+  max-width: 380px; 
+  margin: 1.5rem auto;
 }
+
 .polaroid-card {
-  background: #161b22; padding: 8px 8px 12px 8px; border: 1px solid #30363d;
-  border-radius: 6px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-  transition: transform 0.3s ease; aspect-ratio: 1/1; cursor: pointer;
+  background: #161b22; 
+  padding: 8px 8px 12px 8px; /* شكل البولارويد */
+  border: 1px solid #30363d;
+  border-radius: 6px; 
+  position: relative; 
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease; 
+  aspect-ratio: 1 / 1.1; 
+  cursor: pointer;
 }
+
 .polaroid-card:hover { transform: scale(1.03); }
 .polaroid-pin {
   position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
@@ -168,176 +188,68 @@ body {
    APPLE MUSIC STYLE PLAYER (DARK THEME)
    ============================================= */
 .player-container {
-  position: relative;
-  width: 100%;
-  max-width: 340px;
-  margin: 2rem auto;
-  z-index: 10;
+  position: relative; width: 100%; max-width: 320px; margin: 2.5rem auto 1.5rem; z-index: 10;
 }
-
 .vinyl-record-container {
-  position: absolute;
-  top: -40px;
-  left: -30px;
-  width: 140px;
-  height: 140px;
-  z-index: -1;
+  position: absolute; top: -40px; left: -20px; width: 120px; height: 120px; z-index: -1;
   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
 }
-
-@keyframes spinVinyl {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+@keyframes spinVinyl { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .vinyl-spin { animation: spinVinyl 4s linear infinite; }
 .vinyl-paused { animation-play-state: paused; }
 
 .music-player-card {
-  background: #0f172a; 
-  border: 1px solid #1e293b;
-  border-radius: 24px;
-  padding: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
+  background: #0f172a; border: 1px solid #1e293b; border-radius: 24px;
+  padding: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); display: flex; flex-direction: column;
 }
-
 .player-cover {
-  width: 100%;
-  aspect-ratio: 1/1;
-  background: #1e293b;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 100%; aspect-ratio: 1/1; background: #1e293b; border-radius: 12px; margin-bottom: 20px;
+  overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+.player-info { text-align: left; margin-bottom: 20px; }
+.player-title { color: white; font-size: 1.2rem; font-weight: bold; margin-bottom: 4px; }
+.player-artist { color: #38bdf8; font-size: 0.9rem; opacity: 0.8; }
 
-.player-info {
-  text-align: left;
-  margin-bottom: 20px;
-}
-
-.player-title {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.player-artist {
-  color: #38bdf8;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.timeline-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
+.timeline-container { display: flex; flex-direction: column; margin-bottom: 20px; }
 .ios-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 4px;
-  background: #1e293b;
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-  margin-bottom: 8px;
+  -webkit-appearance: none; width: 100%; height: 4px; background: #1e293b;
+  border-radius: 2px; outline: none; cursor: pointer; margin-bottom: 8px;
 }
-
 .ios-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #38bdf8;
-  cursor: pointer;
-  box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+  -webkit-appearance: none; appearance: none; width: 12px; height: 12px;
+  border-radius: 50%; background: #38bdf8; cursor: pointer; box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
 }
+.time-labels { display: flex; justify-content: space-between; color: #94a3b8; font-size: 0.75rem; font-weight: bold; }
 
-.time-labels {
-  display: flex;
-  justify-content: space-between;
-  color: #94a3b8;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-
-.player-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 15px;
-}
-
-.control-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s;
-}
-
+.player-controls { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 15px; }
+.control-btn { background: none; border: none; color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: transform 0.2s; }
 .control-btn:hover { transform: scale(1.1); color: #38bdf8; }
-
 .play-pause-circle {
-  width: 50px;
-  height: 50px;
-  background: #38bdf8;
-  border-radius: 50%;
-  color: #0f172a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
+  width: 50px; height: 50px; background: #38bdf8; border-radius: 50%; color: #0f172a;
+  display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
 }
-
-.volume-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #94a3b8;
-}
-
+.volume-container { display: flex; align-items: center; gap: 10px; color: #94a3b8; }
 .volume-container svg { width: 14px; height: 14px; fill: currentColor; }
 
 /* =============================================
-   MOBILE ADJUSTMENTS
+   MOBILE ADJUSTMENTS (PERFECT FIT)
    ============================================= */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .corners-overlay, .side-text { display: none; }
   
-  .content-wrapper { 
-    padding: 3rem 1rem 4rem 1rem; 
-    justify-content: flex-start; /* بيحل مشكلة التداخل في الشاشات الصغيرة */
+  .content-wrapper { padding: 30px 15px; }
+  .gift-title { font-size: 2.2rem; }
+  .svg-container { max-width: 170px; }
+  
+  /* تصغير المسافات بين الصور على الشاشات الصغيرة جداً */
+  .moments-grid {
+    gap: 10px; 
+    max-width: 320px;
+  }
+  .polaroid-card {
+    padding: 6px 6px 10px 6px;
   }
   
   .letter-card { padding: 1.5rem 1rem; max-height: 85vh; }
-  .svg-container { max-width: 180px; }
-  .gift-title { font-size: 2.2rem; }
-  
-  /* تظبيط مقاسات شبكة الصور للموبايل */
-  .moments-grid {
-    gap: 0.6rem; 
-    max-width: 100%; 
-    margin: 1rem auto;
-  }
-  .polaroid-card {
-    padding: 5px 5px 10px 5px; 
-  }
-  
-  /* تصغير بسيط للميوزك بلاير عشان يناسب الموبايل */
-  .player-container {
-    max-width: 300px;
-    margin: 1.5rem auto;
-  }
+  .player-container { max-width: 290px; }
 }
