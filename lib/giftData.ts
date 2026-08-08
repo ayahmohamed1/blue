@@ -2,21 +2,16 @@
 // 🎁 GIFT DATA — EDIT HERE to add or change customer content
 // ============================================================
 // Each key is the URL slug: /gift/aya → id = "aya"
-//
-// To add a new customer:
-//   1. Copy the "aya" block below and paste it as a new entry
-//   2. Change the key (e.g. "sara") and fill in the details
-//   3. Add their images to /public/images/
-//   4. Share the link: yourdomain.com/gift/sara
 // ============================================================
 
 export interface GiftData {
-  name: string;           // Shown in the intro "hi [name]!"
-  envelopeImage: string;  // Path inside /public — the intro envelope image
+  name: string;           // Shown in the intro "Make a wish, [name]!"
+  senderName?: string;    // Signature at the bottom of the letter (e.g., "Aya ✨")
+  envelopeImage: string;  // Path inside /public — the envelope image
   birthdayImage: string;  // Path inside /public — the main birthday card image
   message: string;        // The birthday message (supports \n for line breaks)
   musicUrl?: string;      // Optional: URL to a background music mp3
-  accentColor?: string;   // Optional: custom accent color (default: #e8a87c)
+  accentColor?: string;   // Optional: custom accent color (default: #38bdf8)
 }
 
 // ============================================================
@@ -29,11 +24,12 @@ const giftData: Record<string, GiftData> = {
   // Link: yourdomain.com/gift/aya
   // ----------------------------------------------------------
   aya: {
-    name: "youssef",                                          // EDIT: recipient name
-    envelopeImage: "/images/envelope-aya.png",           // EDIT: intro image path
-    birthdayImage: "/images/birthday-aya.png",           // EDIT: birthday card image path
-    accentColor: "#7f339d",                              // EDIT: accent color
-    musicUrl: "",                                        // EDIT: add an mp3 URL for background music (or leave empty)
+    name: "Youssef",                                     // اسم مستلم الهدية
+    senderName: "Aya",                                   // التوقيع في آخر الرسالة (اختياري)
+    envelopeImage: "/images/envelope-aya.png",           // صورة الظرف
+    birthdayImage: "/images/birthday-aya.png",           // صورة الهدية النهائية
+    accentColor: "#38bdf8",                              // اللون الأزرق الفاتح المتوافق مع التصميم الجديد
+    musicUrl: "",                                        // رابط الموسيقى هنا
     message: `yesterday is all about celebrating you — your kindness, your strength, your growth, and all the little things that make you who you are.
 
 I hope you take a moment to look back on everything you've been through and realize just how far you've come. Life hasn't always been easy, but you've handled it in your own way, and that's something worth being proud of.
@@ -51,19 +47,6 @@ Thank you for being you. Never change the parts of yourself that make you unique
 Once again, happy birthday! 🎂✨
 I hope this day marks the beginning of one of your best years yet.`,
   },
-
-  // ----------------------------------------------------------
-  // TEMPLATE: Copy this block to add a new customer
-  // Link: yourdomain.com/gift/[id]
-  // ----------------------------------------------------------
-  // example: {
-  //   name: "Sara",
-  //   envelopeImage: "/images/envelope-sara.png",
-  //   birthdayImage: "/images/birthday-sara.png",
-  //   accentColor: "#f48fb1",
-  //   musicUrl: "",
-  //   message: `Happy birthday Sara! ...`,
-  // },
 
 };
 
