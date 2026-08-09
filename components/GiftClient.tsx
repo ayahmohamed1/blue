@@ -271,7 +271,7 @@ export default function GiftClient({ data }: Props) {
             <div className="polaroid-card">
                <div className="polaroid-pin"></div>
                <div className="polaroid-img-wrapper">
-                  <Image src="/images/pic2.png" alt="Memory 2" fill style={{ objectFit: 'cover' }} unoptimized />
+                  <Image src="/images/pic2.jpg" alt="Memory 2" fill style={{ objectFit: 'cover' }} unoptimized />
                </div>
             </div>
             <div className="polaroid-card">
