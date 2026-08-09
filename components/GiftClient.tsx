@@ -255,7 +255,7 @@ export default function GiftClient({ data }: Props) {
         </div>
       </div>
 
-      {/* ── SCREEN 6: MOMENTS ── */}
+     {/* ── SCREEN 6: MOMENTS ── */}
       <div className={`screen ${screen === 'moments' ? 'visible' : ''}`}>
         <div className="content-wrapper">
           <h2 className="gift-title" style={{ fontStyle: 'italic', marginBottom: '0.5rem' }}>Captured Moments</h2>
@@ -264,25 +264,25 @@ export default function GiftClient({ data }: Props) {
           <div className="moments-grid">
             <div className="polaroid-card">
                <div className="polaroid-pin"></div>
-               <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '4px', overflow: 'hidden' }}>
+               <div className="polaroid-img-wrapper">
                   <Image src="/images/pic1.jpg" alt="Memory 1" fill style={{ objectFit: 'cover' }} unoptimized />
                </div>
             </div>
             <div className="polaroid-card">
                <div className="polaroid-pin"></div>
-               <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '4px', overflow: 'hidden' }}>
-                  <Image src="/images/pic2.jpg" alt="Memory 2" fill style={{ objectFit: 'cover' }} unoptimized />
+               <div className="polaroid-img-wrapper">
+                  <Image src="/images/pic2.png" alt="Memory 2" fill style={{ objectFit: 'cover' }} unoptimized />
                </div>
             </div>
             <div className="polaroid-card">
                <div className="polaroid-pin"></div>
-               <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '4px', overflow: 'hidden' }}>
+               <div className="polaroid-img-wrapper">
                   <Image src="/images/pic3.jpg" alt="Memory 3" fill style={{ objectFit: 'cover' }} unoptimized />
                </div>
             </div>
             <div className="polaroid-card">
                <div className="polaroid-pin"></div>
-               <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '4px', overflow: 'hidden' }}>
+               <div className="polaroid-img-wrapper">
                   <Image src="/images/pic4.jpg" alt="Memory 4" fill style={{ objectFit: 'cover' }} unoptimized />
                </div>
             </div>
